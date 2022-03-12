@@ -4,16 +4,36 @@ define('TEMPLATES_DIR', 'templates/');
 define('LAYOUTS_DIR', 'layouts/');
 
 $page = 'index';
-$params['title'] = 'Главная';
-
-$page = 'index';
 if(isset($_GET['page'])){
     $page = $_GET['page'];
 }
 
-$page = 'catalog';
-$params['title'] = 'Каталог';
-$params['catalog'] = [
+$params = [];
+
+switch($page){
+    case 'index':
+        $params['title'] = 'Главная';
+        break;
+
+    case 'catalog':
+        $params['title'] = 'Каталог';
+        $params['catalog'] = getCatalog();
+        break; 
+        
+    case 'about':
+        $params['title'] = 'О нас';
+        $params['phone'] = 891461785777;
+        break;
+    
+    default:
+        echo "484";
+        die();
+}
+
+function getCatalog()
+{
+    return
+    [
     [
         'name' => 'яблоко',
         'price' => 24,
@@ -29,7 +49,10 @@ $params['catalog'] = [
         'price' => 24,
         'image' => 'apple.jpg',
     ]
-];
+    ];
+}
+
+
 
 echo renderTemplate(LAYOUTS_DIR . 'main', [
     'title' => $params['title'],
